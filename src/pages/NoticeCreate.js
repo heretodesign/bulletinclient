@@ -5,11 +5,10 @@ import 'react-bulma-components/dist/react-bulma-components.min.css'
 
 class NoticeCreate extends React.Component {
   state = {
-    text: '',
+    image: '',
+    title: '',
     due: '',
-    done: '',
-    completed: '',
-    is_trash: ''
+    content: ''
   }
 
   handleChange = event => {
@@ -25,11 +24,10 @@ class NoticeCreate extends React.Component {
     event.preventDefault()
 
     const bodyFormData = new FormData()
-    bodyFormData.set('text', this.state.text)
+    bodyFormData.set('image', this.state.image)
+    bodyFormData.set('title', this.state.title)
     bodyFormData.set('due', this.state.due)
-    bodyFormData.set('done', this.state.done)
-    bodyFormData.set('completed', '1')
-    bodyFormData.set('is_trash', '1')
+    bodyFormData.set('content', this.state.content)
 
     axios({
       method: 'post',
@@ -61,39 +59,67 @@ class NoticeCreate extends React.Component {
                   <div className="content" id="todoForm">
                     <form id="todo-form" onSubmit={this.handleSubmit}>
                       <div className="columns">
-                          <div className="column is-two-fifths">
-                            <div className="field">
-                              <div className="control">
-                                <input className="input is-large" type="text" name="text" placeholder="Add tasks" value={this.state.text} onChange={this.handleChange} />
-                              </div>
+                        <div className="column is-four-fifths">
+                        <div className="field">
+                            <div className="file is-centered is-boxed is-info has-name">
+                              <label className="file-label">
+                                <input className="file-input" type="file" name="image" value={this.state.image} onChange={this.handleChange}  />
+                                <span className="file-cta">
+                                  <span className="file-icon">
+                                    <i className="fas fa-upload"></i>
+                                  </span>
+                                  <span className="file-label">
+                                    Event Picture
+                                  </span>
+                                </span>
+                                <span className="file-name">
+                                  Screen Shot 2017-07-29 at 15.54.25.png
+                                </span>
+                              </label>
                             </div>
                           </div>
-                          <div className="column is-one-fifth">
-                            <div className="field">
-                              <div className="control">
-                                <input className="input is-large" type="text" name="due"  placeholder="Due Date" value={this.state.due} onChange={this.handleChange} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="column is-one-fifth">
-                            <div className="field">
-                              <div className="control">
-                                <input className="input is-large" type="text" name="done" placeholder="Date Completed" value={this.state.done} onChange={this.handleChange} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="column is-one-fifth">
-                            <div className="field">
-                              <div className="control">
-                                <button className="button is-large is-info is-fullwidth" type="submit" value="Submit">Add task</button>
-                              </div>
-                            </div>
-                          </div>
+                        </div>
                       </div>
+                      <div className="columns">
+                          <div className="column is-four-fifths">
+                            <div className="field">
+                              <div className="control">
+                                <input className="input is-large" type="text" name="title" placeholder="Add Bulletin Title" value={this.state.title} onChange={this.handleChange} />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="columns">
+                          <div className="column is-four-fifths">
+                            <div className="field">
+                              <div className="control">
+                                <input className="input is-large" type="text" name="due"  placeholder="Date Held" value={this.state.due} onChange={this.handleChange} />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="columns">
+                          <div className="column is-four-fifths">
+                            <div className="field">
+                              <div className="control">
+                                <textarea className="textarea is-large" type="text" name="content" placeholder="Contents" value={this.state.content} onChange={this.handleChange} />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="columns">
+                          <div className="column is-four-fifths">
+                            <div className="field">
+                              <div className="control">
+                                <button className="button is-large is-info is-fullwidth" type="submit" value="Submit">Add Bulletin</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     </form>
                   </div>
                   <div className="content">
-                      <p className="subtitle is-6 has-text-center has-text-grey has-text-weight-semibold is-uppercase">working with hundreds of restaurants </p>
+                    <p className="subtitle is-6 has-text-center has-text-grey has-text-weight-semibold is-uppercase">Don't Miss Out </p>
                   </div>
                </div>
           </div>

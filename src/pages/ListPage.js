@@ -57,11 +57,10 @@ class ListPage extends React.Component {
                             <table className="table is-mobile">
                               <thead>
                                 <tr>
-                                  <th><abbr title="id" className="is-3">Id</abbr></th>
-                                  <th><abbr title="task">Task</abbr></th>
+                                  <th><abbr title="id" className="is-3">Profile Picture</abbr></th>
+                                  <th><abbr title="task">Title</abbr></th>
                                   <th><abbr title="due">Due Date</abbr></th>
-                                  <th><abbr title="done">Date completed</abbr></th>
-                                  <th><abbr title="completed">Completed</abbr></th>
+                                  <th><abbr title="done">Content</abbr></th>
                                   <th><abbr title="action">Action</abbr></th>
                                 </tr>
                               </thead>

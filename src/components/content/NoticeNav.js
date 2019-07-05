@@ -12,7 +12,7 @@ const NoticeNav = () => {
                 <h2 className="title is-3 has-text-left has-text-weight-light" id="mainBlack">Bulletin Board App<br />
                 </h2>
                 <div className="content">
-                    <p className="subtitle is-6 has-text-left has-text-grey has-text-weight-semibold is-uppercase">All Your life changing Info.</p>
+                    <p className="subtitle is-6 has-text-left has-text-grey has-text-weight-semibold is-uppercase">This Week Focus</p>
                 </div>
                 <div className="content">
                   <div className="columns">
