@@ -9,13 +9,25 @@ class ListPage extends React.Component {
   }
 
   componentDidMount () {
-    axios.get('http://127.0.0.1:8001/api/todos/pending').then(response => {
+    axios.get('http://127.0.0.1:8001/api/todos').then(response => {
       this.setState({
         tasks: response.data
       })
     })
     .catch(error => {
       console.log('ERROR: ', error)
+    })
+  }
+
+  addComment = (taskId) => {
+    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/comment`)
+    .then(response => {
+      this.setState({
+        tasks: this.state.tasks.filter(task => task.id != taskId)
+      })
+    })
+    .catch(error => {
+      alert('Cannot Add Comment')
     })
   }
 
@@ -50,29 +62,28 @@ class ListPage extends React.Component {
           <section className="section is-paddingless-horizontal">
               <div className="container grid is-large notification">
                   <div className="firstsection">
-                      <h1 className="title is-3 has-text-primary">List of All Your Tasks</h1>
+                      <h1 className="title is-3">List of All Your Tasks</h1>
                       <div className="content">
                         <div className="columns">
                           <div className="column" id="tablelisttask">
                             <table className="table is-mobile">
                               <thead>
                                 <tr>
-                                  <th><abbr title="id" className="is-3">Profile Picture</abbr></th>
-                                  <th><abbr title="task">Title</abbr></th>
-                                  <th><abbr title="due">Due Date</abbr></th>
-                                  <th><abbr title="done">Content</abbr></th>
+                                  <th><abbr title="image" className="is-3">Poster</abbr></th>
+                                  <th><abbr title="title">Title</abbr></th>
+                                  <th><abbr title="date">Date Held</abbr></th>
+                                  <th><abbr title="content">Content</abbr></th>
                                   <th><abbr title="action">Action</abbr></th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {this.state.tasks.map((task) => (
                                   <tr className="key={task.id}">
-                                    <td>{ task.id }</td>
-                                    <td>{ task.text } </td>
-                                    <td>{ task.due }</td>
-                                    <td>{ task.done }</td>
-                                    <td><button onClick={() => {this.markComplete(task.id)} } className="button is-primary">Mark as Complete</button></td>
-                                    <td><button onClick={() => {this.markAsTrash(task.id)} } className="button is-danger">Delete</button></td>
+                                    <td>{ task.image }</td>
+                                    <td>{ task.title } </td>
+                                    <td>{ task.date }</td>
+                                    <td>{ task.content }</td>
+                                    <td><button onClick={() => {this.addComment(task.id)} } className="button is-info">Comment</button></td>
                                   </tr>
                                 ))}
                               </tbody>

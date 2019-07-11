@@ -9,7 +9,7 @@ class DetailPage extends React.Component {
   }
 
   componentDidMount () {
-    axios.get('http://127.0.0.1:8001/api/todos/completed').then(response => {
+    axios.get('http://127.0.0.1:8001/api/todos/commented').then(response => {
       console.log(response)
       this.setState({
         tasks: response.data
@@ -20,8 +20,8 @@ class DetailPage extends React.Component {
     })
   }
 
-  markIncomplete = (taskId) => {
-    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/incomplete`)
+  addComment = (taskId) => {
+    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/comment`)
     .then(response => {
       this.setState({
         tasks: this.state.tasks.filter(task => task.id != taskId)
@@ -50,30 +50,28 @@ class DetailPage extends React.Component {
         <section className="section is-paddingless-horizontal">
             <div className="container grid is-large notification">
                 <div className="firstsection">
-                    <h1 className="title is-3 has-text-primary">List of All Your Tasks</h1>
+                    <h1 className="title is-3">List of All Your Tasks</h1>
                     <div className="content">
                       <div className="columns">
                         <div className="column" id="tablelisttask">
                           <table className="table is-mobile">
                             <thead>
                               <tr>
-                                <th><abbr title="id" className="is-3">Id</abbr></th>
-                                <th><abbr title="task">Task</abbr></th>
-                                <th><abbr title="due">Due Date</abbr></th>
-                                <th><abbr title="done">Date completed</abbr></th>
-                                <th><abbr title="completed">Completed</abbr></th>
+                                <th><abbr title="image">Poster</abbr></th>
+                                <th><abbr title="title">Title</abbr></th>
+                                <th><abbr title="date">Date Held</abbr></th>
+                                <th><abbr title="content">Content</abbr></th>
                                 <th><abbr title="action">Action</abbr></th>
                               </tr>
                             </thead>
                             <tbody>
                               { this.state.tasks.map((task) => (
                                 <tr className="key={task.id}">
-                                  <td>{ task.id }</td>
-                                  <td>{ task.text } </td>
-                                  <td>{ task.due }</td>
-                                  <td>{ task.done }</td>
-                                  <td><button onClick={() => {this.markIncomplete(task.id)}} className="button is-primary">Mark as Incomplete</button></td>
-                                  <td><button onClick={() => {this.markAsTrash(task.id)} } className="button is-danger">Delete</button></td>
+                                  <td>{ task.image }</td>
+                                  <td>{ task.title } </td>
+                                  <td>{ task.date }</td>
+                                  <td>{ task.content }</td>
+                                  <td><button onClick={() => {this.addComment(task.id)}} className="button is-primary">Add Comment</button></td>
                                 </tr>
                               ))}
                             </tbody>

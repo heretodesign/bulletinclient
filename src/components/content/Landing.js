@@ -10,11 +10,13 @@ function Landing() {
       <section className="section is-paddingless-horizontal imgLanding">
           <div className="container grid is-large">
               <div className="firstsection">
-                  <h2 className="title is-3 has-text-left has-text-weight-light" id="mainBlack">Use Bulletin Boards to Reinforce Information<br />
-                      & Propel Awareness.
-                  </h2>
                   <div className="content">
-                      <p className="subtitle is-6 has-text-left has-text-grey has-text-weight-semibold is-uppercase">Stay tuned to events, programmes organized by yours faithful</p>
+                    <br />
+                    <br />
+                    <br />
+                    <h2 className="title is-3 has-text-left has-text-weight-light" id="mainBlack">Use Bulletin Boards to Reinforce Information<br />
+                        & Propel Awareness.
+                    </h2>
                   </div>
                   <div className="content" id="landingForm">
                     <div className="columns">
@@ -32,9 +34,7 @@ function Landing() {
                     </div>
 
                   </div>
-                  <div className="content">
-                      <p className="subtitle is-6 has-text-center has-text-grey has-text-weight-semibold is-uppercase">Steering Information to hundreds of Individuals </p>
-                  </div>
+
                </div>
           </div>
       </section>

@@ -7,7 +7,7 @@ class NoticeCreate extends React.Component {
   state = {
     image: '',
     title: '',
-    due: '',
+    date: '',
     content: ''
   }
 
@@ -26,7 +26,7 @@ class NoticeCreate extends React.Component {
     const bodyFormData = new FormData()
     bodyFormData.set('image', this.state.image)
     bodyFormData.set('title', this.state.title)
-    bodyFormData.set('due', this.state.due)
+    bodyFormData.set('date', this.state.date)
     bodyFormData.set('content', this.state.content)
 
     axios({
@@ -93,7 +93,7 @@ class NoticeCreate extends React.Component {
                           <div className="column is-four-fifths">
                             <div className="field">
                               <div className="control">
-                                <input className="input is-large" type="text" name="due"  placeholder="Date Held" value={this.state.due} onChange={this.handleChange} />
+                                <input className="input is-large" type="text" name="date"  placeholder="Date Held" value={this.state.date} onChange={this.handleChange} />
                               </div>
                             </div>
                           </div>

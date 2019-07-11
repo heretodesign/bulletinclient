@@ -18,9 +18,9 @@ class App extends React.Component {
         <Header />
         <Landing />
         <NoticeNav />
-        <Route exact path="/" component={ListPage} /> //details
-        <Route path="/pages/new" component={NoticeCreate} /> //comment
-        <Route path="/pages/detail" component={DetailPage} /> //list of bullentins
+        <Route exact path="/" component={ListPage} />
+        <Route path="/pages/new" component={NoticeCreate} />
+        <Route path="/pages/detail" component={DetailPage} /> 
         <Footer />
       </div>
     );
