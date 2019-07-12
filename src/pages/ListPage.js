@@ -20,15 +20,16 @@ class ListPage extends React.Component {
   }
 
   addComment = (taskId) => {
-    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/comment`)
-    .then(response => {
-      this.setState({
-        tasks: this.state.tasks.filter(task => task.id != taskId)
-      })
-    })
-    .catch(error => {
-      alert('Cannot Add Comment')
-    })
+    this.props.history.push(`/pages/detail/${taskId}`)
+    // axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/comment`)
+    // .then(response => {
+    //   this.setState({
+    //     tasks: this.state.tasks.filter(task => task.id != taskId)
+    //   })
+    // })
+    // .catch(error => {
+    //   alert('Cannot Add Comment')
+    // })
   }
 
   markComplete = (taskId) => {

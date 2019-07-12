@@ -2,89 +2,119 @@ import React from 'react'
 import axios from 'axios'
 import { Button, table, thead, tbody, columns, column} from "react-bulma-components/full"
 import 'react-bulma-components/dist/react-bulma-components.min.css'
+import Image from "react-graceful-image"
+import Flickr from '../Flickr-1.4s-200px.svg'
+
 
 class DetailPage extends React.Component {
   state = {
     tasks: [],
+    data: {},
+    isLoading: true,
+    newComment: ''
   }
 
   componentDidMount () {
-    axios.get('http://127.0.0.1:8001/api/todos/commented').then(response => {
+    axios.get(`http://127.0.0.1:8001/api/todos/${this.props.match.params.id}`)
+    .then(result => {
+      console.log(result.data)
+      this.setState({
+        data: result.data,
+        isLoading: false,
+      })
+    })
+  }
+
+  addComment = (e) => {
+    e.preventDefault();
+    axios.put(`http://127.0.0.1:8001/api/todos/${this.props.match.params.id}/comment`, {'comment': this.state.newComment})
+    .then(response => {
       console.log(response)
       this.setState({
-        tasks: response.data
+        data: response.data.data
       })
     })
     .catch(error => {
-      console.log('ERROR: ', error)
+      alert('Error Adding / showing Comments')
     })
   }
 
-  addComment = (taskId) => {
-    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/comment`)
-    .then(response => {
-      this.setState({
-        tasks: this.state.tasks.filter(task => task.id != taskId)
-      })
-    })
-    .catch(error => {
-      alert('Cannnot mark it as incomplete')
-    })
-  }
-
-  markAsTrash = (taskId) => {
-    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/trash`)
-    .then(response => {
-      this.setState({
-        tasks: this.state.tasks.filter(task => task.id != taskId)
-      })
-    })
-    .catch(error => {
-      alert('Cannnot Mark as Trash')
-    })
+  handleChange = (e) => {
+    this.setState({newComment: e.target.value})
   }
 
   render() {
-  return (
-    <>
-        <section className="section is-paddingless-horizontal">
-            <div className="container grid is-large notification">
-                <div className="firstsection">
-                    <h1 className="title is-3">List of All Your Tasks</h1>
+    const {isLoading, data, newComment} = this.state;
+    return (
+      <>
+          <section className="section is-paddingless-horizontal">
+            <h1>{this.props.match.params.id}</h1>
+              <div className="container grid is-large notification">
+                  <div className="firstsection">
+                    <h1 className="title is-3">Event Details</h1>
                     <div className="content">
-                      <div className="columns">
-                        <div className="column" id="tablelisttask">
-                          <table className="table is-mobile">
-                            <thead>
-                              <tr>
-                                <th><abbr title="image">Poster</abbr></th>
-                                <th><abbr title="title">Title</abbr></th>
-                                <th><abbr title="date">Date Held</abbr></th>
-                                <th><abbr title="content">Content</abbr></th>
-                                <th><abbr title="action">Action</abbr></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              { this.state.tasks.map((task) => (
-                                <tr className="key={task.id}">
-                                  <td>{ task.image }</td>
-                                  <td>{ task.title } </td>
-                                  <td>{ task.date }</td>
-                                  <td>{ task.content }</td>
-                                  <td><button onClick={() => {this.addComment(task.id)}} className="button is-primary">Add Comment</button></td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                         </div>
+                      <div className="columns is-mobile">
+                        <div className="column is-three-fifths is-offset-one-fifth">
+                          {
+                            !isLoading ? (
+                              <>
+                                <img src={data.image} alt='dummy' />
+                                 <br />
+                                <h3> Description: {data.content}</h3> <br />
+                                <h3>Date Held: {data.date}</h3>
+                              </>
+                            )
+                            : <>
+                                <p className="text-center"><img class="display:inline;" src={Flickr} alt="Flickr" /></p>
+                              </>
+                            }
+                        </div>
                       </div>
                     </div>
                  </div>
+              </div>
+          </section>
+          <section className="section is-paddingless-horizontal">
+            <div className="container grid is-large notification">
+                <div className="firstsection">
+                  <div className="content">
+                    <div className="columns">
+                     <div className="column is-three-fifths is-offset-one-fifth">
+                        <h3>You Say: {data.comment}</h3>
+                     </div>
+                    </div>
+                    <form id="addComment-form" onSubmit={e => this.addComment(e)}>
+                      <div className="columns">
+                        <div className="column is-three-fifths is-offset-one-fifth">
+                        <h1 className="title is-3"> Add Your Say</h1>
+                          <div className="columns">
+                            <div className="column">
+                              <div className="field">
+                                <div className="control">
+                                  <textarea onChange={e => this.handleChange(e)} className="textarea is-large" type="text" name="comment" value={newComment}  placeholder="Comment"  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="columns">
+                            <div className="column">
+                              <div className="field">
+                                <div className="control">
+                                  <button className="button is-large is-info is-fullwidth" type="submit" value="Submit">Add Comment</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+               </div>
             </div>
-        </section>
-    </>
-  )
- }
+          </section>
+      </>
+    )
+  }
 }
 
 export default DetailPage;

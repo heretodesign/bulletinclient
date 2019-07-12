@@ -1,7 +1,79 @@
+
+http://127.0.0.1:8001/api/todos/3/comment
+http://127.0.0.1:8001/api/todos/{comment}/comment
+
+
+
+<div className="columns">
+    <div className="column">
+      <div className="field">
+        <div className="control">
+          <input className="input is-large" type="text" name="name" placeholder="Your Name"  />
+        </div>
+      </div>
+    </div>
+  </div>
 <div className="column is-one-quarter">
   <div className="field">
     <div className="control">
       <Link to="/todos/delete" className="button is-large is-primary is-fullwidth">Trash</Link>
     </div>
   </div>
+</div>
+<div class="columns">
+  <div class="column is-three-fifths">is-three-fifths</div>
+</div>
+<div class="columns">
+ <div class="column is-three-fifths">is-three-fifths</div>
+</div>
+
+markAsTrash = (taskId) => {
+  axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/trash`)
+  .then(response => {
+    this.setState({
+      tasks: this.state.tasks.filter(task => task.id != taskId)
+    })
+  })
+  .catch(error => {
+    alert('Cannnot Mark as Trash')
+  })
+}
+
+markAsTrash = (taskId) => {
+  axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/trash`)
+  .then(response => {
+    this.setState({
+      tasks: this.state.tasks.filter(task => task.id != taskId)
+    })
+  })
+  .catch(error => {
+    alert('Cannnot Mark as Trash')
+  })
+}
+
+<div className="columns">
+  <div className="column" id="tablelisttask">
+    <table className="table is-mobile">
+      <thead>
+        <tr>
+          <th><abbr title="image">Poster</abbr></th>
+          <th><abbr title="title">Title</abbr></th>
+          <th><abbr title="date">Date Held</abbr></th>
+          <th><abbr title="content">Content</abbr></th>
+          <th><abbr title="action">Action</abbr></th>
+        </tr>
+      </thead>
+      <tbody>
+        { this.state.tasks.map((task) => (
+          <tr className="key={task.id}">
+            <td>{ task.image }</td>
+            <td>{ task.title } </td>
+            <td>{ task.date }</td>
+            <td>{ task.content }</td>
+            <td><button onClick={() => {this.addComment(task.id)}} className="button is-primary">Add Comment</button></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+   </div>
 </div>

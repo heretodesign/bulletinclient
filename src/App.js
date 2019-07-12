@@ -20,7 +20,7 @@ class App extends React.Component {
         <NoticeNav />
         <Route exact path="/" component={ListPage} />
         <Route path="/pages/new" component={NoticeCreate} />
-        <Route path="/pages/detail" component={DetailPage} /> 
+        <Route path="/pages/detail/:id" component={DetailPage} /> 
         <Footer />
       </div>
     );
