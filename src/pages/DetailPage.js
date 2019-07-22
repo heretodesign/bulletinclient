@@ -5,7 +5,6 @@ import 'react-bulma-components/dist/react-bulma-components.min.css'
 import Image from "react-graceful-image"
 import Flickr from '../Flickr-1.4s-200px.svg'
 
-
 class DetailPage extends React.Component {
   state = {
     tasks: [],
@@ -15,11 +14,11 @@ class DetailPage extends React.Component {
   }
 
   componentDidMount () {
-    axios.get(`http://127.0.0.1:8001/api/todos/${this.props.match.params.id}`)
+    axios.get(`http://localhost:4000/api/posts/${this.props.match.params.id}`)
     .then(result => {
       console.log(result.data)
       this.setState({
-        data: result.data,
+        data: result.data[0],
         isLoading: false,
       })
     })
@@ -27,7 +26,7 @@ class DetailPage extends React.Component {
 
   addComment = (e) => {
     e.preventDefault();
-    axios.put(`http://127.0.0.1:8001/api/todos/${this.props.match.params.id}/comment`, {'comment': this.state.newComment})
+    axios.put(`http://localhost:4000/api/posts/${this.props.match.params.id}`, {'comment': this.state.newComment}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
     .then(response => {
       console.log(response)
       this.setState({

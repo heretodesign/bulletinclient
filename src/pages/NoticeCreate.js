@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 import { Button, Columns, Navbar, Header} from "react-bulma-components/full"
 import 'react-bulma-components/dist/react-bulma-components.min.css'
 
@@ -8,7 +7,8 @@ class NoticeCreate extends React.Component {
     image: '',
     title: '',
     date: '',
-    content: ''
+    content: '',
+    comment: ''
   }
 
   handleChange = event => {
@@ -20,35 +20,75 @@ class NoticeCreate extends React.Component {
     this.setState({file:e.target.files[0]})
   }
 
-  handleSubmit = event => {
-    event.preventDefault()
+//   handleSubmit = event => {
+//     event.preventDefault();
+//     fetch('/api/posts', {
+//         method: 'POST',
+//         headers: {
+//           'Accept': 'application/json',
+//           'Content-Type': 'application/json'
+//         },
+//        body: JSON.stringify({
+//        image: this.state.image,
+//        title:this.state.title,
+//        date: this.state.date,
+//        content: this.state.content,
+//        comment: this.state.comment
+//     })
+//      }).then(res => res.json())
+//      .then(data => console.log(data))
+//      .catch(err => {console.log(err)})
+// }
 
-    const bodyFormData = new FormData()
-    bodyFormData.set('image', this.state.image)
-    bodyFormData.set('title', this.state.title)
-    bodyFormData.set('date', this.state.date)
-    bodyFormData.set('content', this.state.content)
+handleSubmit = event => {
+  event.preventDefault()
+  console.log("Title is : " + this.state.title)
+  console.log("content  : " + this.state.content)
+  const url = '/api/posts'
+  const formData = new FormData()
+  formData.append('image', this.state.image)
+  formData.append('title', this.state.title)
+  formData.append('date', this.state.date)
+  formData.append('content', this.state.content)
+  formData.append('comment', '')
 
-    axios({
-      method: 'post',
-      url: 'http://127.0.0.1:8001/api/todos',
-      config: {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      },
-      data: bodyFormData
-    })
-    .then(resp => {
-      //handle success
-      console.log(resp)
-    })
-    .catch(err => {
-      //handle error
-      console.error(err)
-    })
-  }
+  fetch(url, {
+    method: 'POST', // or 'PUT'
+    // mode: 'cors',
+    body: formData, // data can be `string` or {object}!
+    headers:{
+      // "Content-Type": "application/json"
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+    }
+  }).then(res => res.json())
+  .then(response => console.log('Success:', response))
+  .catch(error => console.error('Error:', error));
+}
 
+
+
+// handleSubmit = event => {
+//   event.preventDefault()
+//   const url = 'http://localhost:4000/api/posts'
+//   const data = new FormData()
+//   data.append('image', this.state.image)
+//   data.append('title', this.state.title)
+//   data.append('date', this.state.date)
+//   data.append('content', this.state.content)
+//
+//   fetch(url, {
+//     method: 'POST',
+//     body: data,
+//     headers: {
+//       'Content-Type': 'application/x-www-form-urlencoded'
+//     }
+//   })
+//   .then(res => res.json())
+//   .then(res => console.log('Success:', res))
+//   .catch(err => {
+//     console.log(err)
+//   })
+// }
 
   render(){
     return (

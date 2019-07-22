@@ -9,52 +9,16 @@ class ListPage extends React.Component {
   }
 
   componentDidMount () {
-    axios.get('http://127.0.0.1:8001/api/todos').then(response => {
-      this.setState({
-        tasks: response.data
-      })
-    })
-    .catch(error => {
-      console.log('ERROR: ', error)
-    })
+    fetch('http://localhost:4000/api/posts')
+    .then(res => res.json())
+    .then(tasks => this.setState({tasks}, () => console.log('Tasks Fetched',
+      tasks)));
   }
 
   addComment = (taskId) => {
     this.props.history.push(`/pages/detail/${taskId}`)
-    // axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/comment`)
-    // .then(response => {
-    //   this.setState({
-    //     tasks: this.state.tasks.filter(task => task.id != taskId)
-    //   })
-    // })
-    // .catch(error => {
-    //   alert('Cannot Add Comment')
-    // })
   }
 
-  markComplete = (taskId) => {
-    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/complete`)
-    .then(response => {
-      this.setState({
-        tasks: this.state.tasks.filter(task => task.id != taskId)
-      })
-    })
-    .catch(error => {
-      alert('Cannnot Mark it as Complete')
-    })
-  }
-
-  markAsTrash = (taskId) => {
-    axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/trash`)
-    .then(response => {
-      this.setState({
-        tasks: this.state.tasks.filter(task => task.id != taskId)
-      })
-    })
-    .catch(error => {
-      alert('Cannnot Mark as Trash')
-    })
-  }
 
   render() {
 
@@ -63,7 +27,7 @@ class ListPage extends React.Component {
           <section className="section is-paddingless-horizontal">
               <div className="container grid is-large notification">
                   <div className="firstsection">
-                      <h1 className="title is-3">List of All Your Tasks</h1>
+                      <h1 className="title is-3">Att: Upcoming Events and Programmes</h1>
                       <div className="content">
                         <div className="columns">
                           <div className="column" id="tablelisttask">
