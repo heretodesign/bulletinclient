@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Backend Server
+
+The Bulletin Server run on port 7000. I've already set up the proxy. Follow the readme to run the client react app.
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -64,5 +68,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ad
 This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
 ### `npm run build` fails to minify
-
+#
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
