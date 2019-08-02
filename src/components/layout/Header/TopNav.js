@@ -10,7 +10,7 @@ function TopNav() {
         <section className="is-paddingless-horizontal topNav has-background-info">
             <div className="container grid">
                 <div className="firstsection">
-                    <p className="subtitle is-6 has-text-white isdata">Making Communication flawless since 1890s</p>
+                    <p className="subtitle is-6 has-text-white isdata">Stay connected to the latest newsfeed, events and important updates</p>
                  </div>
             </div>
         </section>

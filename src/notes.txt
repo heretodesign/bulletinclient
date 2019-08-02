@@ -3,6 +3,9 @@ http://127.0.0.1:8001/api/todos/3/comment
 http://127.0.0.1:8001/api/todos/{comment}/comment
 
 
+<h1>{this.props.match.params.id}</h1> //detail page render
+<td>{ task.image }</td>
+
   markComplete = (taskId) => {
     axios.put(`http://127.0.0.1:8001/api/todos/${taskId}/complete`)
     .then(response => {
@@ -138,3 +141,116 @@ return(
 <input type=”submit” value=”Add user” /> </form> )
 }
 }
+
+markAsTrash = (taskId) => {
+  axios.put(`url/${taskId}/trash`)
+  .then(response => {
+    this.setState({
+      tasks: this.state.tasks.filter(task => task.id != taskId)
+    })
+  })
+  .catch(error => {
+    alert('Cannnot Mark as Trash')
+  })
+}
+
+
+ git remote set-url origin git@github.com:cadsgithub/ddoandtalentspylite.git
+
+ git push -u origin staging
+
+ git user.name
+ git config user.name
+ git config --list
+ git config user.email
+  git config user.name
+
+   git remote set-url origin https://github.com/cadsgithub/cadstraining.git
+   git config user.name "heretodesign"
+git config user.name
+git config user.email "senwelo.works@gmail.com"
+git push -u origin beta
+
+
+https://github.com/cadsgithub/cadstraining/invitations
+
+
+// handleSubmit = event => {
+//   event.preventDefault()
+//   const url = 'http://localhost:7000/api/posts'
+//   const data = new FormData()
+//   data.append('image', this.state.image)
+//   data.append('title', this.state.title)
+//   data.append('date', this.state.date)
+//   data.append('content', this.state.content)
+//
+//   fetch(url, {
+//     method: 'POST',
+//     body: data,
+//     headers: {
+//       'Content-Type': 'application/x-www-form-urlencoded'
+//     }
+//   })
+//   .then(res => res.json())
+//   .then(res => console.log('Success:', res))
+//   .catch(err => {
+//     console.log(err)
+//   })
+// }
+
+// onSubmit(e) {
+//   e.preventDefault();
+//     let formData = new FormData()
+//     formData.append('image', this.state.image)
+//     formData.append('title', this.state.title)
+//     formData.append('date', this.state.date)
+//     formData.append('content', this.state.content)
+//     formData.append('comment', '')
+//   axios.post('http://localhost:7000/api/posts', formData)
+//       .then(res => console.log(res.data));
+//
+//   this.setState({
+//     image: '',
+//     title: '',
+//     date: '',
+//     content: '',
+//     comment: '',
+//   })
+// }
+
+
+//   handleSubmit = event => {
+//     event.preventDefault();
+//     fetch('/api/posts', {
+//         method: 'POST',
+//         headers: {
+//           'Accept': 'application/json',
+//           'Content-Type': 'application/json'
+//         },
+//        body: JSON.stringify({
+//        image: this.state.image,
+//        title:this.state.title,
+//        date: this.state.date,
+//        content: this.state.content,
+//        comment: this.state.comment
+//     })
+//      }).then(res => res.json())
+//      .then(data => console.log(data))
+//      .catch(err => {console.log(err)})
+// }
+
+
+//   fetch(url, {
+//     method: 'POST', // or 'PUT'
+//     // mode: 'cors',
+//     body: formData, // data can be `string` or {object}!
+//     headers:{
+//       // "Accept": "application/json, text/plain, */*",
+//       // "Content-Type": "application/json"
+//       "Content-Type": "application/x-www-form-urlencoded"
+//     }
+//   }).then(res => {res.json()
+//   .then(response => console.log('Success:', response))
+//   .catch(error => console.error('Error:', error));
+// }
+// )}

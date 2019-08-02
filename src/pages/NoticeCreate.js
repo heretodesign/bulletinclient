@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { Button, Columns, Navbar, Header} from "react-bulma-components/full"
 import 'react-bulma-components/dist/react-bulma-components.min.css'
 
@@ -20,31 +21,14 @@ class NoticeCreate extends React.Component {
     this.setState({file:e.target.files[0]})
   }
 
-//   handleSubmit = event => {
-//     event.preventDefault();
-//     fetch('/api/posts', {
-//         method: 'POST',
-//         headers: {
-//           'Accept': 'application/json',
-//           'Content-Type': 'application/json'
-//         },
-//        body: JSON.stringify({
-//        image: this.state.image,
-//        title:this.state.title,
-//        date: this.state.date,
-//        content: this.state.content,
-//        comment: this.state.comment
-//     })
-//      }).then(res => res.json())
-//      .then(data => console.log(data))
-//      .catch(err => {console.log(err)})
-// }
 
 handleSubmit = event => {
   event.preventDefault()
+  console.log("Image is : " + this.state.image)
   console.log("Title is : " + this.state.title)
+    console.log("Date is : " + this.state.date)
   console.log("content  : " + this.state.content)
-  const url = '/api/posts'
+  const url = "http://localhost:7000/api/posts"
   const formData = new FormData()
   formData.append('image', this.state.image)
   formData.append('title', this.state.title)
@@ -52,43 +36,28 @@ handleSubmit = event => {
   formData.append('content', this.state.content)
   formData.append('comment', '')
 
-  fetch(url, {
-    method: 'POST', // or 'PUT'
-    // mode: 'cors',
-    body: formData, // data can be `string` or {object}!
-    headers:{
-      // "Content-Type": "application/json"
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-    }
-  }).then(res => res.json())
-  .then(response => console.log('Success:', response))
-  .catch(error => console.error('Error:', error));
+axios.post(url,
+  {
+    image: this.state.image,
+    title: this.state.title,
+    date: this.state.date,
+    content: this.state.content,
+    comment: this.state.comment
+  }
+)
+.then(response => {
+  console.log(response)
+    this.setState({
+      image: '',
+      title: '',
+      date: '',
+      content: '',
+      comment: '',
+    })
+})
+.catch(err => console.log(err))
 }
 
-
-
-// handleSubmit = event => {
-//   event.preventDefault()
-//   const url = 'http://localhost:4000/api/posts'
-//   const data = new FormData()
-//   data.append('image', this.state.image)
-//   data.append('title', this.state.title)
-//   data.append('date', this.state.date)
-//   data.append('content', this.state.content)
-//
-//   fetch(url, {
-//     method: 'POST',
-//     body: data,
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded'
-//     }
-//   })
-//   .then(res => res.json())
-//   .then(res => console.log('Success:', res))
-//   .catch(err => {
-//     console.log(err)
-//   })
-// }
 
   render(){
     return (

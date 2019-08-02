@@ -8,17 +8,18 @@ import Flickr from '../Flickr-1.4s-200px.svg'
 class DetailPage extends React.Component {
   state = {
     tasks: [],
-    data: {},
+    data: [],
     isLoading: true,
-    newComment: ''
+    newComment: '',
+    addYourSay: []
   }
 
   componentDidMount () {
-    axios.get(`http://localhost:4000/api/posts/${this.props.match.params.id}`)
+    axios.get(`http://localhost:7000/api/posts/${this.props.match.params.id}`)
     .then(result => {
       console.log(result.data)
       this.setState({
-        data: result.data[0],
+        data: result.data,
         isLoading: false,
       })
     })
@@ -26,17 +27,24 @@ class DetailPage extends React.Component {
 
   addComment = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:4000/api/posts/${this.props.match.params.id}`, {'comment': this.state.newComment}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+    console.log(this.state.newComment)
+    axios.patch(`http://localhost:7000/api/posts/${this.props.match.params.id}`,
+      {
+        comment: this.state.newComment
+      }
+    )
     .then(response => {
       console.log(response)
-      this.setState({
-        data: response.data.data
-      })
+        this.setState({
+          newComment: '',
+        })
     })
-    .catch(error => {
-      alert('Error Adding / showing Comments')
-    })
-  }
+    .catch(err => console.log(err))
+    let copyArray = [...this.state.addYourSay]
+    copyArray.push(this.state.newComment)
+    this.setState({addYourSay: copyArray})
+    }
+
 
   handleChange = (e) => {
     this.setState({newComment: e.target.value})
@@ -47,7 +55,6 @@ class DetailPage extends React.Component {
     return (
       <>
           <section className="section is-paddingless-horizontal">
-            <h1>{this.props.match.params.id}</h1>
               <div className="container grid is-large notification">
                   <div className="firstsection">
                     <h1 className="title is-3">Event Details</h1>
@@ -64,7 +71,7 @@ class DetailPage extends React.Component {
                               </>
                             )
                             : <>
-                                <p className="text-center"><img class="display:inline;" src={Flickr} alt="Flickr" /></p>
+                                <p className="text-center"><img className="display:inline;" src={Flickr} alt="Flickr" /></p>
                               </>
                             }
                         </div>
@@ -79,7 +86,11 @@ class DetailPage extends React.Component {
                   <div className="content">
                     <div className="columns">
                      <div className="column is-three-fifths is-offset-one-fifth">
-                        <h3>You Say: {data.comment}</h3>
+                        {this.state.addYourSay.map((comment) => {
+                          return <h3>{comment}</h3>
+                        })}
+
+                        <h3>Comment: {newComment}</h3>
                      </div>
                     </div>
                     <form id="addComment-form" onSubmit={e => this.addComment(e)}>
@@ -90,7 +101,7 @@ class DetailPage extends React.Component {
                             <div className="column">
                               <div className="field">
                                 <div className="control">
-                                  <textarea onChange={e => this.handleChange(e)} className="textarea is-large" type="text" name="comment" value={newComment}  placeholder="Comment"  />
+                                  <textarea onChange={e => this.handleChange(e)} className="textarea is-large" type="text" name="comment" value={newComment}  placeholder="Comment" />
                                 </div>
                               </div>
                             </div>

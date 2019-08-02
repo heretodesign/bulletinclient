@@ -8,12 +8,22 @@ class ListPage extends React.Component {
     tasks: [],
   }
 
+  // componentDidMount () {
+  //   fetch('http://localhost:7000/api/posts')
+  //   .then(res => res.json())
+  //   .then(tasks => this.setState({tasks}, () => console.log('Tasks Fetched',
+  //     tasks)));
+  // }
   componentDidMount () {
-    fetch('http://localhost:4000/api/posts')
-    .then(res => res.json())
-    .then(tasks => this.setState({tasks}, () => console.log('Tasks Fetched',
-      tasks)));
-  }
+  axios.get('http://localhost:7000/api/posts').then(response => {
+    this.setState({
+      tasks: response.data
+    })
+  })
+  .catch(error => {
+    console.log('ERROR: ', error)
+  })
+}
 
   addComment = (taskId) => {
     this.props.history.push(`/pages/detail/${taskId}`)
@@ -44,8 +54,8 @@ class ListPage extends React.Component {
                               <tbody>
                                 {this.state.tasks.map((task) => (
                                   <tr className="key={task.id}">
-                                    <td>{ task.image }</td>
-                                    <td>{ task.title } </td>
+                                    <td><img width="200" height="200" src={ task.image } /></td>
+                                    <td><h4>{ task.title }</h4></td>
                                     <td>{ task.date }</td>
                                     <td>{ task.content }</td>
                                     <td><button onClick={() => {this.addComment(task.id)} } className="button is-info">Comment</button></td>
